@@ -6,7 +6,6 @@ import os
 import platform
 import random
 import sys
-from dotenv import load_dotenv
 
 import discord
 from discord.ext import commands, tasks
@@ -14,9 +13,6 @@ from discord.ext.commands import Bot, Context
 
 import bountyhunter.exceptions as exceptions
 from bountyhunter.config import initial_config
-
-
-#@load_dotenv()
 RED = 0xE02B2B
 error_warning = "A command error was raised! This error hasn't been handled properly in this project!"
 
@@ -78,8 +74,6 @@ class LoggingFormatter(logging.Formatter):
         format = format.replace("(green)", self.green + self.bold)
         formatter = logging.Formatter(format, "%Y-%m-%d %H:%M:%S", style="{")
         return formatter.format(record)
-
-
 logger = logging.getLogger("discord_bot")
 logger.setLevel(logging.INFO)
 
@@ -182,14 +176,14 @@ async def on_command_error(context: Context, error) -> None:
         color=RED
     )
     if isinstance(error, commands.CommandOnCooldown):
-        #TODO
+        # TODO
         embed = default_embed
         embed.title = "Cooldown"
         await context.send(embed=embed)
         bot.logger.warning(error_warning)
         bot.logger.error(str(error))
     elif isinstance(error, exceptions.UserBlackListed):
-        #TODO
+        # TODO
         embed = default_embed
         embed.title = "Blacklisted"
         await context.send(embed=embed)
@@ -197,7 +191,7 @@ async def on_command_error(context: Context, error) -> None:
         bot.logger.error(str(error))
 
     elif isinstance(error, exceptions.UserNotOwner):
-        #TODO
+        # TODO
         embed = default_embed
         embed.title = "Not Owner"
         await context.send(embed=embed)
@@ -207,7 +201,7 @@ async def on_command_error(context: Context, error) -> None:
         bot.logger.error(str(error))
 
     elif isinstance(error, commands.MissingPermissions):
-        #TODO
+        # TODO
         embed = default_embed
         embed.title = "Permisssions"
         await context.send(embed=embed)
@@ -215,7 +209,7 @@ async def on_command_error(context: Context, error) -> None:
         bot.logger.error(str(error))
 
     elif isinstance(error, commands.BotMissingPermissions):
-        #TODO
+        # TODO
         embed = default_embed
         embed.title = "Bot Permissions"
         await context.send(embed=embed)
@@ -223,7 +217,7 @@ async def on_command_error(context: Context, error) -> None:
         bot.logger.error(str(error))
 
     elif isinstance(error, commands.MissingRequiredArgument):
-        #TODO
+        # TODO
         embed = default_embed
         embed.title = "Missing Argument(s)"
         await context.send(embed=embed)
@@ -250,4 +244,4 @@ async def load_cogs() -> None:
 
 if __name__ == "__main__":
     asyncio.run(load_cogs())
-    but.run(config['token'])
+    bot.run(config['token'])
