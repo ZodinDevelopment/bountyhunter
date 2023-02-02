@@ -14,7 +14,6 @@ class Template(commands.Cog, name="template"):
         description="A test command that does nothing."
     )
     @checks.not_blacklisted()  # TODO
-    @checks.is_owner()  # TODO
     async def testcommand(self, context: Context):
         """
         This is a test command taht does nothing.
