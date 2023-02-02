@@ -187,19 +187,26 @@ async def on_command_error(context: Context, error) -> None:
         color=RED
     )
     if isinstance(error, commands.CommandOnCooldown):
-        # TODO
-        embed = default_embed
+        minutes, seconds = divmod(error.retry_after, 60)
+        hours, minutes = divmod(minutes, 60)
+        hours = hours % 24
+        embed = discord.Embed(
+            description=f"**Woahhh slow down man** You can use this again in {f'{round(hours)} hours' if round(hours) > 0 else ''} {f'{round(minutes)} minutes' if round(minutes) > 0 else ''} {f'{round(seconds)} seconds' if round(seconds) > 0 else ''}",
+            color=RED
+        )
         embed.title = "Cooldown"
         await context.send(embed=embed)
-        bot.logger.warning(error_warning)
-        bot.logger.error(str(error))
+        #bot.logger.error(str(error))
     elif isinstance(error, exceptions.UserBlackListed):
-        # TODO
-        embed = default_embed
+        embed = discord.Embed(
+            description="You are blacklisted from using this bot.",
+            color=RED
+        )
         embed.title = "Blacklisted"
         await context.send(embed=embed)
-        bot.logger.warning(error_warning)
-        bot.logger.error(str(error))
+        bot.logger.warning(
+            f"{context.author} (ID: {context.author.id}) tried to execute a command in the guild {context.guild.name} (ID: {context.guild.id}) but they are in the blacklist."
+        )
 
     elif isinstance(error, exceptions.UserNotOwner):
         # TODO
