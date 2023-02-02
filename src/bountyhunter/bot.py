@@ -6,23 +6,34 @@ import os
 import platform
 import random
 import sys
+from dotenv import load_dotenv
 
 import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot, Context
 
 import bountyhunter.exceptions as exceptions
+from bountyhunter.config import initial_config
 
 
+#@load_dotenv()
 RED = 0xE02B2B
 error_warning = "A command error was raised! This error hasn't been handled properly in this project!"
 
 
-if len(sys.argv) < 2 or not os.path.isfile(str(sys.argv[1])):
+if len(sys.argv) < 2:
     sys.exit("Please provide path to config file as an argument!")
 
 else:
     config_path = str(sys.argv[1])
+    if not os.path.isfile(config_path):
+        print("Using defaults found in .env file to initialize config.json file, since it doesn't exist yet.")
+        try:
+
+            initial_config()
+        except Exception as e:
+            print(str(e))
+            sys.exit("Could not initialize config.json")
     with open(config_path, 'r') as file:
         config = json.load(file)
 
