@@ -30,7 +30,7 @@ else:
         print("Using defaults found in .env file to initialize config.json file, since it doesn't exist yet.")
         try:
 
-            initial_config()
+            initial_config(config_path)
         except Exception as e:
             print(str(e))
             sys.exit("Could not initialize config.json")
