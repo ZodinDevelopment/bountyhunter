@@ -9,11 +9,12 @@ async def get_blacklisted_users() -> list:
     pass #TODO
 
 
+# noinspection PyTypeChecker
 async def is_blacklisted(user_id: int) -> bool:
     """
     Checks to see if user has been blacklisted.
 
-    :param user_id: Id of the discord user to check
+    :param user_id: ID of the discord user to check
     :return: True if the user is blacklisted.
     """
     blacklist = [

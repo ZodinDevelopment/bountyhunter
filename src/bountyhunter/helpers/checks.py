@@ -5,7 +5,7 @@ from typing import Callable, TypeVar
 from discord.ext import commands
 
 from bountyhunter.exceptions import *
-from helpers import db_manager # TODO
+from bountyhunter.helpers import db_manager # TODO
 
 
 T = TypeVar("T")
