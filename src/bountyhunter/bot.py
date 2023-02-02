@@ -13,6 +13,8 @@ from discord.ext.commands import Bot, Context
 
 import bountyhunter.exceptions as exceptions
 from bountyhunter.config import initial_config
+
+
 RED = 0xE02B2B
 error_warning = "A command error was raised! This error hasn't been handled properly in this project!"
 
@@ -22,16 +24,25 @@ if len(sys.argv) < 2:
 
 else:
     config_path = str(sys.argv[1])
-    if not os.path.isfile(config_path):
-        print("Using defaults found in .env file to initialize config.json file, since it doesn't exist yet.")
+    if os.path.isfile(config_path):
+        print("Using defaults found in .env file to initialize config.json file, since it doesn't exist yet. Overwriting file")
         try:
 
-            initial_config(config_path)
+            config = initial_config(os.path.dirname(config_path))
         except Exception as e:
             print(str(e))
             sys.exit("Could not initialize config.json")
-    with open(config_path, 'r') as file:
-        config = json.load(file)
+    elif os.path.isdir(config_path):
+        print("Saving config file as 'bot_config.json' at the path you specified.")
+        try:
+            config = initial_config(os.path.dirname(config_path))
+
+        except Exception as e:
+            print(str(e))
+            sys.exit("Could not initialize config.json file.")
+
+    else:
+        sys.exit("Fatal Error line 45")
 
 
 intents = discord.Intents.default()
