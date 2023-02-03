@@ -11,6 +11,7 @@ python = "^3.10"
 discord = "^2.1.0"
 aiosqlite = "^0.18.0"
 python-dotenv = "^0.21.1"
+sqlalchemy = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 

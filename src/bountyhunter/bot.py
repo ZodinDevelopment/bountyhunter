@@ -13,6 +13,8 @@ from discord.ext.commands import Bot, Context
 
 import bountyhunter.exceptions as exceptions
 from bountyhunter.config import initial_config
+from bountyhunter.database.models import connect_db, engine, AioSession
+
 
 
 RED = 0xE02B2B
@@ -85,6 +87,8 @@ class LoggingFormatter(logging.Formatter):
         format = format.replace("(green)", self.green + self.bold)
         formatter = logging.Formatter(format, "%Y-%m-%d %H:%M:%S", style="{")
         return formatter.format(record)
+
+
 logger = logging.getLogger("discord_bot")
 logger.setLevel(logging.INFO)
 
@@ -108,7 +112,7 @@ bot.logger = logger
 
 
 async def init_db():
-    pass
+    await connect_db()
 
 
 bot.config = config
@@ -262,4 +266,5 @@ async def load_cogs() -> None:
 
 if __name__ == "__main__":
     asyncio.run(load_cogs())
+    asyncio.run(init_db())
     bot.run(config['token'])
