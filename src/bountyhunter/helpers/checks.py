@@ -29,3 +29,12 @@ def not_blacklisted() -> Callable[[T], T]:
         return True
 
     return commands.check(predicate)
+
+
+def already_registered() -> Callable[[T], T]:
+    async def predicate(context: commands.Context) -> bool:
+        if await db_manager.check_existing_user(context.author.id):
+            raise UserAlreadyRegistered
+        return True
+
+    return commands.check(predicate)

@@ -23,3 +23,7 @@ async def is_blacklisted(user_id: int) -> bool:
         3,
         3
     ]
+
+
+async def is_existing_user():
+    pass
