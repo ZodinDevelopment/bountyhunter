@@ -93,7 +93,7 @@ class Report(Base):
     reporter = relationship("BotUser", back_populates="reports")
 
     cheater_id = Column(ForeignKey("cheater.id"))
-    cheater = relationship("Cheater", back_popoulates="reports")
+    cheater = relationship("Cheater", back_populates="reports")
 
     def __init__(
             self,
